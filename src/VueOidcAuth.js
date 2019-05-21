@@ -38,12 +38,7 @@ export function createOidcAuth(
   if (!authName) {
     throw new Error('Auth name is required.')
   }
-  if (
-    defaultSignInType !== SignInType.Window &&
-    defaultSignInType !== SignInType.Popup
-  ) {
-    throw new Error('Only window or popup are valid default signin types.')
-  }
+
   if (!appUrl) {
     throw new Error('App base url is required.')
   }
@@ -62,12 +57,9 @@ export function createOidcAuth(
     userStore: new WebStorageStateStore({
       store: localStorage
     }),
-    post_logout_redirect_uri: appUrl,
+
     ...oidcConfig, // all properties after this are not user configurable
-    redirect_uri: `${appUrl}auth/signinwin/${authName}`,
-    popup_post_logout_redirect_uri: `${appUrl}auth/signoutpop/${authName}`,
-    popup_redirect_uri: `${appUrl}auth/signinpop/${authName}`,
-    silent_redirect_uri: `${appUrl}auth/signinsilent/${authName}`
+
   }
 
   Log.debug(`Creating new oidc auth as ${authName}`)
